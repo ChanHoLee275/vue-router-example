@@ -17,7 +17,7 @@
             <v-btn
                 color="primary"
                 text
-                @click="updateShowState"
+                @click="updateShowState(!currentShowState)"
             >
                 I accept
             </v-btn>
@@ -28,7 +28,7 @@
         <v-dialog v-if="currentTypeState=='default2'" v-model="dialogState" >
         <v-card>
             <v-card-title class="text-h5 grey lighten-2">
-                default2
+            default2
             </v-card-title>
 
             <v-card-text>
@@ -42,7 +42,7 @@
             <v-btn
                 color="primary"
                 text
-                @click="updateShowState"
+                @click="updateShowState(!currentShowState)"
             >
                 I accept
             </v-btn>
@@ -54,19 +54,18 @@
   
 <script lang="ts">
     import { Vue, Component } from 'vue-property-decorator';
-    import { ActionContext } from 'vuex';
     import { Getter, Action } from "vuex-class";
-
-    interface StateType {
-        isShow:boolean;
-    }
 
     @Component
     export default class DialogView extends Vue {
         @Getter currentShowState!: boolean;
         @Getter currentTypeState!: string;
 
-        @Action updateShowState!: ActionContext<StateType, StateType>;
+        @Action updateShowState!: (isShow: boolean) => void;
+
+        mounted() {
+         console.log(this.updateShowState);   
+        }
 
         public get dialogState() {
             return this.$store.getters.currentShowState;
