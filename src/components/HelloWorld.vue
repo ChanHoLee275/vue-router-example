@@ -30,14 +30,21 @@
 
 <script lang="ts">
   import { Vue, Component } from 'vue-property-decorator';
-
+  
+  function chunckErrorHandler(err: Error) {
+    const errName = (err as Error).name ?? "UNDEFINED";
+        if(errName == "ChunkLoadError") {
+          window.location.reload();
+        }
+  }
+  
   @Component
   export default class HelloWorld extends Vue {
     handleMove(routerName: string){
       this.$router
       .push({name: routerName})
       .catch((err) => {
-        console.log(err)
+        chunckErrorHandler(err);
       });
     }
   }

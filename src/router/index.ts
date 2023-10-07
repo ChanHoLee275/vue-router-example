@@ -1,9 +1,13 @@
-import Vue from 'vue'
+import Vue, { Component } from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import store from "../store/index";
 
 Vue.use(VueRouter)
+
+function lazyLoader (input: () => Component | undefined) {
+
+}
 
 const routes: Array<RouteConfig> = [
   {
@@ -30,15 +34,7 @@ const router: VueRouter = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  
-  const userLevel = store.getters.currentUserAccessLevelState;
-  const pageLevel = (to.meta as {accessLevel: number}).accessLevel;
-  if(pageLevel > userLevel){
-    store.commit("updateShowState", true);
-    next(false);
-  } else {
-    next();
-  }
+  next();
 });
 
 export default router;
